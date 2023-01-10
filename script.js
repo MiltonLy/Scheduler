@@ -2,15 +2,65 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 var currentDayEl = document.getElementById('currentDay');
+var timeslotEl = document.getElementsByClassName('time-block');
+var element = document.getElementsByClassName('row');
+var saveBtnEl = document.getElementById('saveBtn');
+// var descriptionEl = document.querySelector("#description").value;
 
-const date = new Date();
+let date = new Date();
 let day = date.getDate();
 let month = date.getMonth()+1;
 let year = date.getFullYear;
 console.log(date);
 currentDayEl.innerText = date;
 
-$(function () {
+let currentTimeEl = date.getHours();
+
+
+$(function schedule() {
+  Array.from(timeslotEl).forEach(row =>{
+    let rowIdString = row.id,
+    rowHour;
+    if (rowIdString){
+      rowHour = parseInt(rowIdString);
+    }
+    if (rowHour) {
+      console.log(currentTimeEl+" "+rowHour)
+     
+      if (currentTimeEl === rowHour){ 
+        
+        // Array.from(element).forEach(rows =>{
+          row.classList.remove('past');
+          row.classList.add('present');
+          row.classList.remove('future');
+        // })
+      }else if ((currentTimeEl < rowHour)){
+        //Array.from(element).forEach(rows=>{
+        console.log("test")
+          row.classList.remove('past');
+          row.classList.remove('present');
+          row.classList.add('future');
+        // })
+      } else if((currentTimeEl > rowHour)) {
+        // console.log('wite')
+        // Array.from(element).forEach(rows =>{
+          row.classList.add('past');
+          row.classList.remove('present');
+          row.classList.remove('future');
+        // })
+      }
+    }
+  })
+  
+  // saveBtnEl.addEventListener('click', saveDescription)
+
+  // function saveDescription(){
+  //   localStorage.setItem('description', input);
+  // }
+  
+  
+  // localStorage.setItem('description', descriptionEl)
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
