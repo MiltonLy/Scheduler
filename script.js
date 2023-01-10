@@ -4,8 +4,7 @@
 var currentDayEl = document.getElementById('currentDay');
 var timeslotEl = document.getElementsByClassName('time-block');
 var element = document.getElementsByClassName('row');
-var saveBtnEl = document.getElementById('saveBtn');
-// var descriptionEl = document.querySelector("#description").value;
+var saveBtnEl = document.getElementsByClassName('saveBtn');
 
 let date = new Date();
 let day = date.getDate();
@@ -51,16 +50,25 @@ $(function schedule() {
       }
     }
   })
-  
-  // saveBtnEl.addEventListener('click', saveDescription)
 
-  // function saveDescription(){
-  //   localStorage.setItem('description', input);
-  // }
-  
-  
-  // localStorage.setItem('description', descriptionEl)
+  Array.from(saveBtnEl).forEach(button=>{
+    button.addEventListener('click', function(event){
+    event.preventDefault();
+    let description = button.parentElement.getElementsByTagName('textArea')[0].value;
+    console.log(description)
+    localStorage.setItem('description',description);
+    })
+  })
 
+  function saveData(e){
+    var number=$(e).data('num');
+    var input = document.getElementsByTagName('textArea'+number).value;
+    localStorage.setItem('text'+ number,input);
+  }
+
+  for (var i = 9; i <= 20; i++) {
+    document.getElementsByClassName('textArea'+ i).value = localStorage.getItem('text'+i);
+  }
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
